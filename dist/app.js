@@ -35,17 +35,17 @@ yargs_1.default.command({
         title: {
             describe: "Note title",
             demandOption: true,
-            type: 'string'
+            type: "string",
         },
         body: {
             describe: "Note body",
             demandOption: true,
-            type: 'string'
-        }
+            type: "string",
+        },
     },
     handler(argv) {
         notes.addNote(argv.title, argv.body);
-    }
+    },
 });
 yargs_1.default.command({
     command: "remove",
@@ -54,31 +54,32 @@ yargs_1.default.command({
         title: {
             describe: "Title to be removed",
             demandOption: true,
-            type: 'string'
-        }
+            type: "string",
+        },
     },
     handler(argv) {
         notes.removeNote(argv.title);
-    }
+    },
 });
 yargs_1.default.command({
     command: "list",
     describe: "list all the notes",
     handler() {
         notes.displayNotes();
-    }
+    },
 });
 yargs_1.default.command({
     command: "read",
-    describe: "read note by title", builder: {
+    describe: "read note by title",
+    builder: {
         title: {
             describe: "Title to be opened",
             demandOption: true,
-            type: 'string'
-        }
+            type: "string",
+        },
     },
     handler(argv) {
         notes.readNote(argv.title);
-    }
+    },
 });
 yargs_1.default.parse();

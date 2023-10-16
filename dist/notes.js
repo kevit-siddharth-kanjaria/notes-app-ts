@@ -12,7 +12,7 @@ const addNote = (title, body) => {
     if (!duplicateNotes) {
         notes.push({
             title: title,
-            body: body
+            body: body,
         });
         saveNotes(notes);
         console.log(chalk_1.default.green("New note added!"));
@@ -24,7 +24,7 @@ const addNote = (title, body) => {
 exports.addNote = addNote;
 const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes);
-    fs_1.default.writeFileSync('notes.json', dataJSON);
+    fs_1.default.writeFileSync("notes.json", dataJSON);
 };
 const removeNote = (title) => {
     const notes = loadNotes();
@@ -40,7 +40,7 @@ const removeNote = (title) => {
 exports.removeNote = removeNote;
 const loadNotes = () => {
     try {
-        const dataBuffer = fs_1.default.readFileSync('notes.json');
+        const dataBuffer = fs_1.default.readFileSync("notes.json");
         const dataJSON = dataBuffer.toString();
         return JSON.parse(dataJSON);
     }
