@@ -3,18 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readNote = exports.displayNotes = exports.removeNote = exports.addNote = void 0;
+exports.readNote = exports.displayNotes = exports.loadNotes = exports.removeNote = exports.saveNotes = exports.addNote = void 0;
 const fs_1 = __importDefault(require("fs"));
 const chalk_1 = __importDefault(require("chalk"));
 const addNote = (title, body) => {
-    const notes = loadNotes();
+    const notes = (0, exports.loadNotes)();
     const duplicateNotes = notes.find((note) => note.title === title);
     if (!duplicateNotes) {
         notes.push({
             title: title,
             body: body,
         });
-        saveNotes(notes);
+        (0, exports.saveNotes)(notes);
         console.log(chalk_1.default.green("New note added!"));
     }
     else {
@@ -26,14 +26,15 @@ const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes);
     fs_1.default.writeFileSync("notes.json", dataJSON);
 };
+exports.saveNotes = saveNotes;
 const removeNote = (title) => {
-    const notes = loadNotes();
+    const notes = (0, exports.loadNotes)();
     const updatedNotes = notes.filter((note) => note.title !== title);
     if (updatedNotes.length === notes.length) {
         console.log(chalk_1.default.red("No note with given title"));
     }
     else {
-        saveNotes(updatedNotes);
+        (0, exports.saveNotes)(updatedNotes);
         console.log(chalk_1.default.blue("Removed note : " + title));
     }
 };
@@ -48,8 +49,9 @@ const loadNotes = () => {
         return [];
     }
 };
+exports.loadNotes = loadNotes;
 const displayNotes = () => {
-    const notes = loadNotes();
+    const notes = (0, exports.loadNotes)();
     console.log(chalk_1.default.yellow.inverse("All notes : "));
     let i = 1;
     for (const key in notes) {
@@ -65,7 +67,7 @@ const displayNotes = () => {
 };
 exports.displayNotes = displayNotes;
 const readNote = (title) => {
-    const notes = loadNotes();
+    const notes = (0, exports.loadNotes)();
     const openNote = notes.find((note) => note.title === title);
     if (!openNote) {
         console.log(chalk_1.default.red("No not with given title"));

@@ -6,7 +6,7 @@ type note = {
 import fs from "fs";
 import chalk from "chalk";
 
-const addNote = (title: string, body?: string): void => {
+export const addNote = (title: string, body?: string): void => {
   const notes: note[] = loadNotes();
   const duplicateNotes = notes.find((note) => note.title === title);
   if (!duplicateNotes) {
@@ -21,12 +21,12 @@ const addNote = (title: string, body?: string): void => {
   }
 };
 
-const saveNotes = (notes: note[]): void => {
+export const saveNotes = (notes: note[]): void => {
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync("notes.json", dataJSON);
 };
 
-const removeNote = (title: string): void => {
+export const removeNote = (title: string): void => {
   const notes = loadNotes();
   const updatedNotes = notes.filter((note) => note.title !== title);
   if (updatedNotes.length === notes.length) {
@@ -37,7 +37,7 @@ const removeNote = (title: string): void => {
   }
 };
 
-const loadNotes = (): note[] => {
+export const loadNotes = (): note[] => {
   try {
     const dataBuffer = fs.readFileSync("notes.json");
     const dataJSON = dataBuffer.toString();
@@ -47,7 +47,7 @@ const loadNotes = (): note[] => {
   }
 };
 
-const displayNotes = (): void => {
+export const displayNotes = (): void => {
   const notes = loadNotes();
   console.log(chalk.yellow.inverse("All notes : "));
   let i = 1;
@@ -63,7 +63,7 @@ const displayNotes = (): void => {
   }
 };
 
-const readNote = (title: string): void => {
+export const readNote = (title: string): void => {
   const notes = loadNotes();
   const openNote = notes.find((note) => note.title === title);
   if (!openNote) {
@@ -73,5 +73,3 @@ const readNote = (title: string): void => {
     console.log(openNote.body);
   }
 };
-
-export { addNote, removeNote, displayNotes, readNote };
